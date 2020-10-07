@@ -1,8 +1,9 @@
 package com.capgemini.workshop;
 
 import java.util.Scanner;
-
+import java.util.Random; 
 public class TicTacToeGame {
+	Random rand; 
 	public char[] createTicTacBoard(int size) {
 		char[] boardSize = new char[size];
 		for (int i = 0; i < boardSize.length; i++) {
@@ -46,5 +47,13 @@ public class TicTacToeGame {
 				System.out.println("Location is not empty");
 		}
 		return location;
+	}
+	public boolean toss() {
+		rand= new Random();
+		int randomNumber=rand.nextInt(2);
+		if(randomNumber==1)
+			return true;
+		else
+			return false;
 	}
 }
