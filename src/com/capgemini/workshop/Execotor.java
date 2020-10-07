@@ -7,11 +7,15 @@ public class Execotor {
 	static char computer;
 
 	public static void main(String[] args) {
-		System.out.println("Welcome to Tik Tak Toe Program");
+		System.out.println("-----Welcome to Tik Tak Toe Game-----");
 		Scanner scan = new Scanner(System.in);
 		TicTacToeGame ticTacToeGame = new TicTacToeGame();
 		char[] board = ticTacToeGame.createTicTacBoard(10);
-		ticTacToeGame.takeInputFromPlayer(player, computer, scan);
+		ticTacToeGame.takeInputFromPlayer(scan);
+		System.out.println("player input is : " + player);
+		ticTacToeGame.showBoard(board);
+		int location = ticTacToeGame.chooseLocation(board, scan);
+		board[location] = player;
 		ticTacToeGame.showBoard(board);
 	}
 }
