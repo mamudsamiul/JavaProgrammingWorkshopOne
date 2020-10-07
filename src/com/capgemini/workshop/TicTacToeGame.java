@@ -5,19 +5,26 @@ import java.util.Scanner;
 public class TicTacToeGame {
 	public char[] createTicTacBoard(int size) {
 		char[] boardSize = new char[size];
+		for (int i = 0; i < boardSize.length; i++) {
+			boardSize[i] = ' ';
+		}
 		return boardSize;
 	}
 
-	public void takeInputFromPlayer(Boolean player, Boolean computer, Scanner scan) {
+	public void takeInputFromPlayer(char player, char computer, Scanner scan) {
 		System.out.println("Enter 'X' or 'O' ");
-		String entry = scan.next();
-		if (entry.equals("X")) {
-			player = true;
-			computer = false;
-		} else if (entry.equals("O")) {
-			player = false;
-			computer = true;
-		} else
+		char entry = scan.next().toUpperCase().charAt(0);
+		if (entry == 'X')
+			player = 'X';
+		else if (entry == 'O')
+			player = 'o';
+		else
 			System.out.println("Invalid Input!");
+	}
+
+	public void showBoard(char[] board) {
+		for (int i = 0; i < board.length; i++) {
+			System.out.println("Board Layout: " + board);
+		}
 	}
 }
