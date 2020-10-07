@@ -13,16 +13,34 @@ public class Execotor {
 		Scanner scan = new Scanner(System.in);
 		TicTacToeGame ticTacToeGame = new TicTacToeGame();
 		char[] board = ticTacToeGame.createTicTacBoard(10);
-		toss=ticTacToeGame.toss();
-		if(toss==true) {
+		toss = ticTacToeGame.toss();
+		if (toss == true) {
 			System.out.println("It is Your Turn");
 			ticTacToeGame.takeInputFromPlayer(scan);
 			System.out.println("player input is : " + player);
 			ticTacToeGame.showBoard(board);
-			location = ticTacToeGame.chooseLocation(board, scan);
-			board[location] = player;
-		}
-		else
+		} else
 			System.out.println("Computer turn");
+
+		while (true) {
+			if (toss == true) {
+				location = ticTacToeGame.chooseLocation(board, scan);
+				board[location] = player;
+				ticTacToeGame.showBoard(board);
+				String result = ticTacToeGame.checkWinner(board);
+				System.out.println();
+				if (result.equals("X")) {
+					System.out.println("You are the winner");
+					break;
+				}
+				if (result.equals("Tie")) {
+					System.out.println("Tie");
+					break;
+				}
+				toss = true;
+			} else
+				break;
+
+		}
 	}
 }
