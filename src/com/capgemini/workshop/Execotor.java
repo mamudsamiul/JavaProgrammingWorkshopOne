@@ -8,29 +8,32 @@ public class Execotor {
 	static char computer;
 
 	public static void main(String[] args) {
-		ArrayList<Integer> computerMoveHistory = new ArrayList<Integer>();
 		int location;
 		boolean toss;
+		ArrayList<Integer> computerMoveHistory = new ArrayList<Integer>();
+		ArrayList<Integer> playerMoveHistory = new ArrayList<Integer>();
 		System.out.println("-----Welcome to Tik Tak Toe Game-----");
 		Scanner scan = new Scanner(System.in);
 		TicTacToeGame ticTacToeGame = new TicTacToeGame();
 		char[] board = ticTacToeGame.createTicTacBoard(10);
 		toss = ticTacToeGame.toss();
 		if (toss == true) {
-			System.out.println("It is Your Turn");
+			System.out.println("You win the toss!");
 			ticTacToeGame.takeInputFromPlayer(scan);
 
 		} else {
-			System.out.println("Computer's turn");
+			System.out.println("Computer win the toss!");
 			ticTacToeGame.takeInputFromComputer();
 		}
-		System.out.println("Your Mark is: '" + player + "' And Computer's Mark is : '" + computer + "'");
 		ticTacToeGame.showBoard(board);
+		System.out.println("Your Mark is: '" + player + "' And Computer's Mark is : '" + computer + "'");
 		ComputerWinningLogic computerLogic = new ComputerWinningLogic(computer, player);
 
 		while (true) {
 			if (toss == true) {
+				System.out.println("Your turn: ");
 				location = ticTacToeGame.chooseLocation(board, scan);
+				playerMoveHistory.add(location);
 				board[location] = player;
 				ticTacToeGame.showBoard(board);
 				String result = ticTacToeGame.checkWinner(board);
@@ -45,15 +48,22 @@ public class Execotor {
 				}
 				toss = false;
 			} else {
-				location = computerLogic.placeMove(board, computerMoveHistory);
+				System.out.println("Computer's turn");
+				int[] block = computerLogic.blockTheMove(board, playerMoveHistory);
+				int[] nextMove = computerLogic.placeMove(board, computerMoveHistory);
+				if (block[0] < 0 && nextMove[0] < 0)
+					location = computerLogic.randomMove(board);
+				else if (nextMove[1] < block[1])
+					location = block[0];
+				else
+					location = nextMove[0];
 				computerMoveHistory.add(location);
-				System.out.println("location is " + location);
 				board[location] = computer;
 				ticTacToeGame.showBoard(board);
 				String result = ticTacToeGame.checkWinner(board);
 				System.out.println();
 				if (result.charAt(0) == (computer)) {
-					System.out.println("Computer win the game!");
+					System.out.println("Alas!! Computer win the game!");
 					break;
 				}
 				if (result.equals("Tie")) {
@@ -62,7 +72,6 @@ public class Execotor {
 				}
 				toss = true;
 			}
-
 		}
 	}
 }
