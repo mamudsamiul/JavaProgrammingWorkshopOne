@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class TicTacToeGame {
-	Random rand;
+	Random rand = new Random();
 
 	public char[] createTicTacBoard(int size) {
 		char[] boardSize = new char[size];
@@ -15,7 +15,7 @@ public class TicTacToeGame {
 	}
 
 	public void takeInputFromPlayer(Scanner scan) {
-		System.out.println("Enter Your marker 'X' or 'O' ");
+		System.out.println("Please choose Your marker either 'X' or 'O' ");
 		char entry = scan.next().toUpperCase().charAt(0);
 		if (entry == 'X') {
 			Execotor.player = 'X';
@@ -25,6 +25,17 @@ public class TicTacToeGame {
 			Execotor.computer = 'X';
 		} else
 			System.out.println("Invalid Input!");
+	}
+
+	public void takeInputFromComputer() {
+		int random = rand.nextInt(2);
+		if (random == 1) {
+			Execotor.player = 'X';
+			Execotor.computer = 'O';
+		} else {
+			Execotor.player = 'O';
+			Execotor.computer = 'X';
+		}
 	}
 
 	public void showBoard(char[] board) {
@@ -52,7 +63,6 @@ public class TicTacToeGame {
 	}
 
 	public boolean toss() {
-		rand = new Random();
 		int randomNumber = rand.nextInt(2);
 		if (randomNumber == 1)
 			return true;
