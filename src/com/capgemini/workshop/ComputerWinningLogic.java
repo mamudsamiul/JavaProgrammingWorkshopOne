@@ -78,14 +78,29 @@ public class ComputerWinningLogic {
 
 	}
 
-	public int randomMove(char[] board) {
-		Random rand = new Random();
-		int random = 1 + rand.nextInt(8);
-		while (board[random] != ' ') {
-			random = 1 + rand.nextInt(8);
+	public int randomMove(char[] board, int[] corner, int[] side) {
+		int location = 0;
+		int flag = 0;
+		for (int i : corner) {
+			if (board[i] == ' ') {
+				location = i;
+				flag = 3;
+				break;
+			}
 		}
-		int nextMove = random;
-		return nextMove;
+		if (board[5] == ' ' && flag != 3) {
+			location = 5;
+			flag = 2;
+		}
+		if (flag != 2 && flag != 3) {
+			for (int i : side) {
+				if (board[i] == ' ' && flag != 2) {
+					location = i;
+					break;
+				}
+			}
+		}
+		return location;
 	}
 
 	public int[] blockTheMove(char[] board, ArrayList<Integer> computerMoveHistory) {

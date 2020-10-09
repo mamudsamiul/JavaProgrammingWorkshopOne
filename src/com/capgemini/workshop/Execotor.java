@@ -12,6 +12,8 @@ public class Execotor {
 		boolean toss;
 		ArrayList<Integer> computerMoveHistory = new ArrayList<Integer>();
 		ArrayList<Integer> playerMoveHistory = new ArrayList<Integer>();
+		int[] corner = { 1, 3, 7, 9 };
+		int[] side = { 2, 4, 6, 8 };
 		System.out.println("-----Welcome to Tik Tak Toe Game-----");
 		Scanner scan = new Scanner(System.in);
 		TicTacToeGame ticTacToeGame = new TicTacToeGame();
@@ -52,7 +54,7 @@ public class Execotor {
 				int[] block = computerLogic.blockTheMove(board, playerMoveHistory);
 				int[] nextMove = computerLogic.placeMove(board, computerMoveHistory);
 				if (block[0] < 0 && nextMove[0] < 0)
-					location = computerLogic.randomMove(board);
+					location = computerLogic.randomMove(board, corner, side);
 				else if (nextMove[1] < block[1])
 					location = block[0];
 				else
