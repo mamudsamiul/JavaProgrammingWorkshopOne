@@ -1,5 +1,6 @@
 package com.capgemini.workshop;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Execotor {
@@ -7,6 +8,7 @@ public class Execotor {
 	static char computer;
 
 	public static void main(String[] args) {
+		ArrayList<Integer> computerMoveHistory = new ArrayList<Integer>();
 		int location;
 		boolean toss;
 		System.out.println("-----Welcome to Tik Tak Toe Game-----");
@@ -17,10 +19,14 @@ public class Execotor {
 		if (toss == true) {
 			System.out.println("It is Your Turn");
 			ticTacToeGame.takeInputFromPlayer(scan);
-			System.out.println("player input is : " + player);
-			ticTacToeGame.showBoard(board);
-		} else
-			System.out.println("Computer turn");
+
+		} else {
+			System.out.println("Computer's turn");
+			ticTacToeGame.takeInputFromComputer();
+		}
+		System.out.println("Your Mark is: '" + player + "' And Computer's Mark is : '" + computer + "'");
+		ticTacToeGame.showBoard(board);
+		ComputerWinningLogic computerLogic = new ComputerWinningLogic(computer, player);
 
 		while (true) {
 			if (toss == true) {
@@ -29,7 +35,7 @@ public class Execotor {
 				ticTacToeGame.showBoard(board);
 				String result = ticTacToeGame.checkWinner(board);
 				System.out.println();
-				if (result.equals("X")) {
+				if (result.charAt(0) == (player)) {
 					System.out.println("You are the winner");
 					break;
 				}
@@ -37,9 +43,25 @@ public class Execotor {
 					System.out.println("Tie");
 					break;
 				}
+				toss = false;
+			} else {
+				location = computerLogic.placeMove(board, computerMoveHistory);
+				computerMoveHistory.add(location);
+				System.out.println("location is " + location);
+				board[location] = computer;
+				ticTacToeGame.showBoard(board);
+				String result = ticTacToeGame.checkWinner(board);
+				System.out.println();
+				if (result.charAt(0) == (computer)) {
+					System.out.println("Computer win the game!");
+					break;
+				}
+				if (result.equals("Tie")) {
+					System.out.println("Tie");
+					break;
+				}
 				toss = true;
-			} else
-				break;
+			}
 
 		}
 	}
